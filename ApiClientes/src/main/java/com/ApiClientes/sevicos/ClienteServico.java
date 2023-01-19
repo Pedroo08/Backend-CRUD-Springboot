@@ -2,7 +2,7 @@ package com.ApiClientes.sevicos;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class ClienteServico {
 	}
 	
 	
-	
+	//Get
 	public List<ClienteDto> listarClientes(){
 		
 		List<Cliente> lista = repositorio.findAll();
@@ -33,7 +33,16 @@ public class ClienteServico {
 		return  ClienteDto.converte(lista);
 	}
 	
+	//Get
+	public List<ClienteDto> listarClientesPorNome(String nome){
+			
+			List<Cliente> lista = repositorio.findByNomeContaining(nome);
+			
+			return  ClienteDto.converte(lista);
+		}
 	
+	
+	//Get
 	public ClienteDto AcharClientePorId( long id) {
 			
 			
@@ -41,6 +50,7 @@ public class ClienteServico {
 		}
 
 	
+	//Post
 	public ResponseEntity<ClienteDto> CadastrarCliente(@RequestBody ClienteDto clienteDto){
 		Cliente cliente = clienteDto.ConverteParaCliente();
 		
@@ -49,15 +59,17 @@ public class ClienteServico {
 		
 	}
 	
+	//Put
 	public ResponseEntity<ClienteDto> AtulizarCliente(@RequestBody ClienteDto clienteDto, @PathVariable long id){
 			
 			Cliente cliente = clienteDto.Atualizar(repositorio,id);
 			repositorio.save(cliente);
 			
-			return new ResponseEntity<ClienteDto>(clienteDto,HttpStatus.CREATED);
+			return new ResponseEntity<ClienteDto>(clienteDto,HttpStatus.OK);
 		}
 	
 	
+	//Delete
 	public ResponseEntity<?> apagar(@PathVariable Long id){
 		repositorio.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);

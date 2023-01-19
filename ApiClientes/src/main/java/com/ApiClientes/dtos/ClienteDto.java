@@ -3,8 +3,6 @@ package com.ApiClientes.dtos;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.ApiClientes.entidades.Cliente;
 import com.ApiClientes.repositorios.ClienteRepositorio;
 
@@ -17,8 +15,7 @@ public class ClienteDto {
 	String telefone;
 	String email;
 	
-	@Autowired
-	private ClienteRepositorio repositorio;
+	
 	
 	
 	public ClienteDto() {}
@@ -114,7 +111,7 @@ public class ClienteDto {
 		 if(this.nome != null)
 			 cliente.setNome(this.nome);	
 		 
-		 //cliente.setTelefone(this.telefone);
+		 
 		 if(this.telefone != null)
 			 cliente.setTelefone(this.telefone);
 	    	

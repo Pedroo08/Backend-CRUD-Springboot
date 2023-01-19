@@ -2,8 +2,6 @@ package com.ApiClientes.controladores;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ApiClientes.dtos.ClienteDto;
-import com.ApiClientes.entidades.Cliente;
-import com.ApiClientes.repositorios.ClienteRepositorio;
 import com.ApiClientes.sevicos.ClienteServico;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/clientes")
@@ -33,6 +30,8 @@ public class ClienteControlador {
     }
 	
 	
+	////////////Requisições \\\\\\\\\
+	
 	@GetMapping
 	public List<ClienteDto> listarClientes(){
 		
@@ -40,7 +39,13 @@ public class ClienteControlador {
 	}
 	
 	
+	@GetMapping("/nome/{nome}")
+	public List<ClienteDto> listarClientesPorNome(@PathVariable String nome){
+		
+		return servico.listarClientesPorNome(nome);
+	}
 
+	
 	
 	@GetMapping("/{id}")
 	public ClienteDto AcharClientePorId(@PathVariable long id) {
@@ -49,7 +54,7 @@ public class ClienteControlador {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClienteDto> CadastrarCliente(@RequestBody ClienteDto clienteDto){
+	public ResponseEntity<ClienteDto> CadastrarCliente(@RequestBody @Valid ClienteDto clienteDto){
 		
 		return servico.CadastrarCliente(clienteDto);
 		
